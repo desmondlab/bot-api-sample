@@ -24,7 +24,9 @@ server.post('/api/messages', connector.listen());
 
 var bot = new builder.UniversalBot(connector);
 
+    // Client access token from api.ai
     var recognizer = new apiairecognizer("0f8de20c6e484458b79e18dd952b0451");
+
     var intents = new builder.IntentDialog({
             recognizers: [recognizer]
     });
@@ -51,6 +53,10 @@ intents.matches('ask_cost',[
         session.send(answer);
     }
 ]);
+
+intents.onDefault(function(session){
+    session.send("不清楚，請再發問。");
+});
 
 /** 
 intents.matches('whatIsWeather',[
@@ -90,7 +96,3 @@ intents.matches('smalltalk.greetings',function(session, args){
         session.send('Sorry...not sure how to respond to that');
     }
 }); **/
-
-intents.onDefault(function(session){
-    session.send("不清楚，請再發問。");
-});
